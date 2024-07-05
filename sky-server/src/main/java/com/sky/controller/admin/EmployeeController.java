@@ -1,6 +1,7 @@
 package com.sky.controller.admin;
 
 import com.sky.constant.JwtClaimsConstant;
+import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.entity.Employee;
 import com.sky.properties.JwtProperties;
@@ -82,6 +83,18 @@ public class EmployeeController {
         byte[] bytes=password.getBytes();
         String encrypted= DigestUtils.md5DigestAsHex(bytes);
         System.out.println("encrypted=" + encrypted);
+    }
+
+    @PostMapping
+    @ApiOperation("新增员工")
+    public Result addEmployee(@RequestBody EmployeeDTO dto){
+        //打印传过来的参数值
+        //sl4j日志规范，{}占位符,{}个数与顺序要保持一致
+        log.info("新增员工参数：{}",dto);
+        //调用业务层
+        employeeService.save(dto);
+        //相应结果
+        return Result.success();
     }
 
 }

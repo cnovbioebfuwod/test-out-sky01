@@ -1,7 +1,10 @@
 package com.sky.service.impl;
 
 import com.sky.constant.MessageConstant;
+import com.sky.constant.PasswordConstant;
 import com.sky.constant.StatusConstant;
+import com.sky.context.BaseContext;
+import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.entity.Employee;
 import com.sky.exception.AccountLockedException;
@@ -9,9 +12,12 @@ import com.sky.exception.AccountNotFoundException;
 import com.sky.exception.PasswordErrorException;
 import com.sky.mapper.EmployeeMapper;
 import com.sky.service.EmployeeService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+
+import java.time.LocalDateTime;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -54,6 +60,45 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         //3、返回实体对象
         return employee;
+    }
+
+    /**
+     * 新增员工
+     * @param dto
+     */
+    @Override
+    public void save(EmployeeDTO dto){
+//        操作数据库要用实体类
+        Employee pojo=new Employee();
+//        复制属性的值，属性名
+//        p1:源把pi复制给p2
+        BeanUtils.copyProperties(dto,pojo);
+
+        //业务处理
+//        手机号码是否为非法的11位
+//        身份证号码为合法的18位
+//        账号username必须为唯一
+//        默认密码,得先使用mds加密
+        String encryptedPwd=DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes());
+        pojo.setPassword(encryptedPwd);
+        pojo.setStatus(StatusConstant.ENABLE);  //魔鬼数字
+//        辅助字段的值
+//        pojo.setCreateTime(LocalDateTime.now());
+//        pojo.setUpdateTime(LocalDateTime.now());
+
+        LocalDateTime now=LocalDateTime.now();
+        pojo.setCreateTime(now);
+        pojo.setUpdateTime(now);
+
+//        数字后l long类型，数字后d double,f:float类型
+//        Long loginUserId= BaseContext.getCurrentId();
+//        log.info("EmployyeeServiceImpol：当前登录用户的id为")
+        pojo.setCreateUser(10l);//TODO 后续修改为当前登录用户id
+        pojo.setUpdateUser(10l);//TODO 后续修改为当前登录用户id
+        //调用mapper存入数据库表中
+        employeeMapper.insert(pojo);
+
+
     }
 
 }
