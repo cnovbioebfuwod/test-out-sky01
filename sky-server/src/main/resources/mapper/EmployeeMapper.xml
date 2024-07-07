@@ -2,4 +2,37 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sky.mapper.EmployeeMapper">
+<!--    id不能重复({namespace}.{id})-->
+    <select id="countTotal" resultType="java.lang.Long">
+        select count(*) from employee
+        <where>
+            <if test="name !=null">
+            name like #{name}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="pageQuery" resultType="com.sky.entity.Employee">
+        <bind name="skip" value="(page-1)*pageSize"/>
+        SELECT * FROM employee
+        <where>
+            <if test="name !=null">
+                name like #{name}
+            </if>
+        </where>
+            LIMIT #{skip}, #{pageSize}
+    </select>
+
+
+
+
+    <select id="selectPage" resultType="com.sky.entity.Employee">
+        SELECT * FROM employee
+        <where>
+            <if test="name !=null">
+                name like concat('%',#{name},'%')
+            </if>
+        </where>
+    </select>
 </mapper>
