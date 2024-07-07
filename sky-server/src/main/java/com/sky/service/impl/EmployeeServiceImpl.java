@@ -117,6 +117,24 @@ public class EmployeeServiceImpl implements EmployeeService {
         return new PageResult(page.getTotal(),page.getResult());
     }
 
+    /**
+     * 启用或禁用员工账号
+     *
+     * @param status
+     * @param id
+     */
+    @Override
+    public void startOrStop(int status, long id) {
+//        业务处理
+        Employee updatePojo=new Employee();
+        updatePojo.setId(id);
+        updatePojo.setStatus(status);
+        updatePojo.setUpdateTime(LocalDateTime.now()) ;
+        updatePojo.setUpdateUser(BaseContext.getCurrentId());
+        employeeMapper.update(updatePojo);
+
+    }
+
 //    @Override
 //    public PageResult pageQuery(EmployeePageQueryDTO dto) {
 ////        if(dto.getName() !=null&& dto.getName().trim().length()>0)

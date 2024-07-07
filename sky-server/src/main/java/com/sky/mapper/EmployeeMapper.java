@@ -31,6 +31,13 @@ public interface EmployeeMapper {
     Page<Employee> selectPage(EmployeePageQueryDTO dto);
 
 
+    /**
+     * 更新员工信息
+     * @param updatePojo
+     */
+    void update(Employee updatePojo);
+
+
 //    id
 //            name
 //    username
