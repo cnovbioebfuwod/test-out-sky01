@@ -12,6 +12,7 @@ import com.sky.dto.EmployeePageQueryDTO;
 import com.sky.entity.Employee;
 import com.sky.exception.AccountLockedException;
 import com.sky.exception.AccountNotFoundException;
+import com.sky.exception.BaseException;
 import com.sky.exception.PasswordErrorException;
 import com.sky.mapper.EmployeeMapper;
 import com.sky.result.PageResult;
@@ -25,6 +26,7 @@ import org.springframework.util.DigestUtils;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static sun.plugin2.main.server.LiveConnectSupport.getResult;
 
@@ -135,9 +137,40 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     }
 
+    /**
+     * 通过id查询员工信息
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public Employee getById(int id) {
+        //调用mapper来查询
+        Employee employee=employeeMapper.selectById(id);
+
+        if (null==employee){
+            throw new BaseException("员工信息不存在！");
+        }
+        //设置密码为null,脱敏处理
+        employee.setPassword(null);
+        return employee;
+
+    }
+
+    @Override
+    public void update(EmployeeDTO dto){
+        Employee updatePojo=new Employee();
+        BeanUtils.copyProperties(dto,updatePojo);
+        updatePojo.setUpdateTime(LocalDateTime.now());
+        // 修改者Id
+        updatePojo.setUpdateUser(BaseContext.getCurrentId());
+        // 执行更新
+        employeeMapper.update(updatePojo);
+    }
+
 //    @Override
 //    public PageResult pageQuery(EmployeePageQueryDTO dto) {
-////        if(dto.getName() !=null&& dto.getName().trim().length()>0)
+//        if(dto.getName() !=null&& dto.getName().trim().length()>0)
 //        PageResult pageResult=new PageResult(0,new ArrayList());
 //        if(ObjectUtils.isNotEmpty(dto.getName())) {
 //            dto.setName("%"+dto.getName()+"%");

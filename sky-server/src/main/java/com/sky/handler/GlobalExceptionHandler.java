@@ -36,6 +36,13 @@ public class GlobalExceptionHandler {
             return Result.error(MessageConstant.UNKNOWN_ERROR);
         }
     }
+        /**
+         * 业务异常处理
+         */
+        @ExceptionHandler(BaseException.class)
+        public Result<String> handleBaseException(BaseException e){
+            return Result.success(e.getMessage());
+        }
 //    @ExceptionHandler
 //    public Result exceptionHandler(BaseException ex){
 //        log.error("异常信息：{}", ex.getMessage());
