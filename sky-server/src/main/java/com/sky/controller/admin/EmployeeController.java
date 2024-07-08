@@ -136,6 +136,7 @@ public class EmployeeController {
     @PutMapping
     public Result<String> update(@RequestBody EmployeeDTO dto){
         //调用业务层更新员工信息
+        log.info("修改员工信息：{}",dto);
         employeeService.update(dto);
         return Result.success();
     }

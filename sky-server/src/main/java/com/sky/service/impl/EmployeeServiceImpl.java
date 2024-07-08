@@ -97,15 +97,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 //        pojo.setCreateTime(LocalDateTime.now());
 //        pojo.setUpdateTime(LocalDateTime.now());
 
-        LocalDateTime now=LocalDateTime.now();
-        pojo.setCreateTime(now);
-        pojo.setUpdateTime(now);
+//        LocalDateTime now=LocalDateTime.now();
+//        pojo.setCreateTime(now);
+//        pojo.setUpdateTime(now);
 
 //        数字后l long类型，数字后d double,f:float类型
 //        Long loginUserId= BaseContext.getCurrentId();
 //        log.info("EmployyeeServiceImpol：当前登录用户的id为")
-        pojo.setCreateUser(10l);//TODO 后续修改为当前登录用户id
-        pojo.setUpdateUser(10l);//TODO 后续修改为当前登录用户id
+//        pojo.setCreateUser(10l);//TODO 后续修改为当前登录用户id
+//        pojo.setUpdateUser(10l);//TODO 后续修改为当前登录用户id
         //调用mapper存入数据库表中
         employeeMapper.insert(pojo);
 
@@ -131,15 +131,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee updatePojo=new Employee();
         updatePojo.setId(id);
         updatePojo.setStatus(status);
-        updatePojo.setUpdateTime(LocalDateTime.now()) ;
-        updatePojo.setUpdateUser(BaseContext.getCurrentId());
+//        updatePojo.setUpdateTime(LocalDateTime.now()) ;
+//        updatePojo.setUpdateUser(BaseContext.getCurrentId());
         employeeMapper.update(updatePojo);
 
     }
 
     /**
      * 通过id查询员工信息
-     *
      * @param id
      * @return
      */
@@ -161,9 +160,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void update(EmployeeDTO dto){
         Employee updatePojo=new Employee();
         BeanUtils.copyProperties(dto,updatePojo);
-        updatePojo.setUpdateTime(LocalDateTime.now());
-        // 修改者Id
-        updatePojo.setUpdateUser(BaseContext.getCurrentId());
+//        updatePojo.setUpdateTime(LocalDateTime.now());
+//        // 修改者Id
+//        updatePojo.setUpdateUser(BaseContext.getCurrentId());
         // 执行更新
         employeeMapper.update(updatePojo);
     }
