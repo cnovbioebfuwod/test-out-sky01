@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
          */
         @ExceptionHandler(BaseException.class)
         public Result<String> handleBaseException(BaseException e){
-            return Result.success(e.getMessage());
+            return Result.error(e.getMessage());
         }
 //    @ExceptionHandler
 //    public Result exceptionHandler(BaseException ex){
