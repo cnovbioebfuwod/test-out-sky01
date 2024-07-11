@@ -1,4 +1,4 @@
-package com.sky.service.impl;
+package com.sky.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 

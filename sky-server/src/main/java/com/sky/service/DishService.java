@@ -37,4 +37,11 @@ public interface DishService {
     DishVO geiByIdWithFlavors(Long id);
 
     void update(DishDTO dishDTO);
+
+    /**
+     * 条件查询菜品和口味
+     * @param dish
+     * @return
+     */
+    List<DishVO> listWithFlavor(Dish dish);
 }
