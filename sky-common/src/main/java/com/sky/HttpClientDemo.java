@@ -30,8 +30,8 @@ public class HttpClientDemo {
 
     private static void mpLogin() throws Exception {
         CloseableHttpClient httpClient = HttpClients.createDefault();
-        String code = "0a32vyll2qIvLd4ZzUll2mlhSl32vylI";
-        String url = String.format("https://api.weixin.qq.com/sns/jscode2session?appid=wx1c759351c7cfba06&serect=7fbaf60f8020696ace7a765bc16dd846&" +
+        String code = "0c3qJz000LEMsS11SR000ZzIUi4qJz0k";
+        String url = String.format("https://api.weixin.qq.com/sns/jscode2session?appid=wx1c759351c7cfba06&secret=7fbaf60f8020696ace7a765bc16dd846&" +
                 "js_code=%s" +
                 "&grant_type=authorization_code",code);
 
